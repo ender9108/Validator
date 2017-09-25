@@ -1,13 +1,14 @@
 <?php
+namespace EnderLab\Handler;
 
-namespace EnderLab;
+use EnderLab\ValidatorInterface;
 
 class SlugValidator implements ValidatorInterface
 {
     /**
      * @var string
      */
-    private $errors;
+    private $error;
 
     /**
      * @var mixed
@@ -23,8 +24,8 @@ class SlugValidator implements ValidatorInterface
      * SlugValidator constructor.
      *
      * @param string $fieldName
-     * @param mixed  $value
-     */
+     * @param mixed $value
+      */
     public function __construct(string $fieldName, $value)
     {
         $this->value = $value;
@@ -38,8 +39,8 @@ class SlugValidator implements ValidatorInterface
     {
         $pattern = '/^[a-z0-9]+(-[a-z0-9]+)*$/';
 
-        if (null !== $this->value && !preg_match($pattern, $value)) {
-            // @todo error message
+        if (null !== $this->value && !preg_match($pattern, $this->value)) {
+            $this->buildError();
             return false;
         }
 
@@ -51,6 +52,14 @@ class SlugValidator implements ValidatorInterface
      */
     public function getError(): string
     {
-        return $this->errors;
+        return $this->error;
+    }
+
+    /**
+     * @return void
+     */
+    private function buildError(): void
+    {
+        //
     }
 }
