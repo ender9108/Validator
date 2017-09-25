@@ -31,4 +31,11 @@ class ValidatorTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $validator->slug('test');
     }
+
+    public function testCallGoodKey()
+    {
+        $validator = $this->makeValidator();
+        $validator->slug('field1');
+        $this->assertEquals(1, $validator->count());
+    }
 }
