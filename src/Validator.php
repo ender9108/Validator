@@ -126,7 +126,7 @@ class Validator implements \Countable
 
         array_unshift($arguments, $key, $this->getField($key));
 
-        if (is_string($name)) {
+        if (is_string($validator)) {
             $reflection  = new \ReflectionClass($validator);
             $this->validators[] = $reflection->newInstanceArgs($arguments);
         } else {
