@@ -36,7 +36,7 @@ class ValidatorTest extends TestCase
     {
         $validator = $this->makeValidator();
         $validator->slug('field1');
-        $this->assertEquals(1, $validator->count());
+        $this->assertSame(1, $validator->count());
     }
 
     public function testCallInvalidValidator()

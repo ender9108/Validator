@@ -1,6 +1,6 @@
 <?php
-namespace Tests\EnderLab;
 
+namespace Tests\EnderLab;
 
 class InvalidValidator
 {

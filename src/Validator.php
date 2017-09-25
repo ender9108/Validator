@@ -37,7 +37,7 @@ class Validator implements \Countable
      */
     public function __call(string $name, ?array $arguments = []): self
     {
-        $className = 'EnderLab\\'.ucfirst($name) . 'Validator';
+        $className = 'EnderLab\\' . ucfirst($name) . 'Validator';
 
         $this->checkValidator($className);
 
@@ -49,7 +49,7 @@ class Validator implements \Countable
 
         array_unshift($arguments, $key, $this->getField($key));
 
-        $reflection  = new \ReflectionClass($className);
+        $reflection = new \ReflectionClass($className);
         $this->validators[] = $reflection->newInstanceArgs($arguments);
 
         return $this;
@@ -127,7 +127,7 @@ class Validator implements \Countable
         array_unshift($arguments, $key, $this->getField($key));
 
         if (is_string($validator)) {
-            $reflection  = new \ReflectionClass($validator);
+            $reflection = new \ReflectionClass($validator);
             $this->validators[] = $reflection->newInstanceArgs($arguments);
         } else {
             $this->validators[] = $validator;
