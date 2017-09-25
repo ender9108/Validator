@@ -1,5 +1,6 @@
 <?php
-namespace EnderLab\Validator;
+
+namespace EnderLab;
 
 interface ValidatorInterface
 {

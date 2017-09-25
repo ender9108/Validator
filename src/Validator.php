@@ -1,5 +1,6 @@
 <?php
-namespace EnderLab\Validator;
+
+namespace EnderLab;
 
 class Validator
 {
@@ -29,13 +30,14 @@ class Validator
     }
 
     /**
-     * @param string $name
+     * @param string     $name
      * @param array|null $arguments
+     *
      * @return Validator
      */
     public function __call(string $name, ?array $arguments = []): self
     {
-        $className = ucfirst($name).'Validator';
+        $className = ucfirst($name) . 'Validator';
 
         $this->checkValidator($className);
 
@@ -47,7 +49,7 @@ class Validator
 
         array_unshift($arguments, $key, $this->getField($key));
 
-        $this->validators[] = call_user_func_array(array($className, '__construct'), $arguments);
+        $this->validators[] = call_user_func_array([$className, '__construct'], $arguments);
 
         return $this;
     }
@@ -71,20 +73,22 @@ class Validator
 
     /**
      * @param string $key
+     *
      * @return bool
      */
     public function has(string $key): bool
     {
-        return (array_key_exists($key, $this->fields) ? true : false);
+        return array_key_exists($key, $this->fields) ? true : false;
     }
 
     /**
      * @param string $key
+     *
      * @return bool|mixed
      */
     public function getField(string $key)
     {
-        return (array_key_exists($key, $this->fields) ? $this->fields[$key] : false);
+        return array_key_exists($key, $this->fields) ? $this->fields[$key] : false;
     }
 
     /**
@@ -105,7 +109,8 @@ class Validator
 
     /**
      * @param ValidatorInterface|string $validator
-     * @param array|null $arguments
+     * @param array|null                $arguments
+     *
      * @return Validator
      */
     public function setCustomValidator(string $validator, array $arguments): self
@@ -121,7 +126,7 @@ class Validator
         array_unshift($arguments, $key, $this->getField($key));
 
         if (is_string($name)) {
-            $this->validators[] = call_user_func_array(array($validator, '__construct'), $arguments);
+            $this->validators[] = call_user_func_array([$validator, '__construct'], $arguments);
         } else {
             $this->validators[] = $validator;
         }
@@ -134,13 +139,13 @@ class Validator
      */
     private function checkValidator(string $className)
     {
-        if (class_exists($className)) {
-            throw new \InvalidArgumentException('Class "'.$className.'" does not exists.');
+        if (!class_exists($className)) {
+            throw new \InvalidArgumentException('Class "' . $className . '" does not exists.');
         }
 
         $reflection = new \ReflectionClass($className);
 
-        if (false == $reflection->implementsInterface('EnderLab\\Validator\\ValidatorInterface')) {
+        if (false === $reflection->implementsInterface('EnderLab\\Validator\\ValidatorInterface')) {
             throw new \InvalidArgumentException(
                 'Validator must be implement "EnderLab\\Validator\\ValidatorInterface" interface.'
             );
