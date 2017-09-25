@@ -2,7 +2,7 @@
 
 namespace EnderLab;
 
-class Validator
+class Validator implements \Countable
 {
     /**
      * @var array
@@ -37,7 +37,7 @@ class Validator
      */
     public function __call(string $name, ?array $arguments = []): self
     {
-        $className = ucfirst($name) . 'Validator';
+        $className = 'EnderLab\\'.ucfirst($name) . 'Validator';
 
         $this->checkValidator($className);
 
@@ -49,7 +49,8 @@ class Validator
 
         array_unshift($arguments, $key, $this->getField($key));
 
-        $this->validators[] = call_user_func_array([$className, '__construct'], $arguments);
+        $reflection  = new \ReflectionClass($className);
+        $this->validators[] = $reflection->newInstanceArgs($arguments);
 
         return $this;
     }
@@ -126,12 +127,21 @@ class Validator
         array_unshift($arguments, $key, $this->getField($key));
 
         if (is_string($name)) {
-            $this->validators[] = call_user_func_array([$validator, '__construct'], $arguments);
+            $reflection  = new \ReflectionClass($validator);
+            $this->validators[] = $reflection->newInstanceArgs($arguments);
         } else {
             $this->validators[] = $validator;
         }
 
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function count(): int
+    {
+        return count($this->validators);
     }
 
     /**
@@ -145,9 +155,9 @@ class Validator
 
         $reflection = new \ReflectionClass($className);
 
-        if (false === $reflection->implementsInterface('EnderLab\\Validator\\ValidatorInterface')) {
+        if (false === $reflection->implementsInterface('EnderLab\\ValidatorInterface')) {
             throw new \InvalidArgumentException(
-                'Validator must be implement "EnderLab\\Validator\\ValidatorInterface" interface.'
+                'Validator must be implement "EnderLab\\ValidatorInterface" interface.'
             );
         }
 

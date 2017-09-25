@@ -24,4 +24,11 @@ class ValidatorTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $validator->test();
     }
+
+    public function testCallUndefinedKey()
+    {
+        $validator = $this->makeValidator();
+        $this->expectException(\InvalidArgumentException::class);
+        $validator->slug('test');
+    }
 }
