@@ -38,4 +38,11 @@ class ValidatorTest extends TestCase
         $validator->slug('field1');
         $this->assertEquals(1, $validator->count());
     }
+
+    public function testCallInvalidValidator()
+    {
+        $validator = $this->makeValidator();
+        $this->expectException(\InvalidArgumentException::class);
+        $validator->setCustomValidator('Tests\\EnderLab\\InvalidValidator', 'field1');
+    }
 }

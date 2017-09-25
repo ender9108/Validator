@@ -114,7 +114,7 @@ class Validator implements \Countable
      *
      * @return Validator
      */
-    public function setCustomValidator(string $validator, array $arguments): self
+    public function setCustomValidator(string $validator, ...$arguments): self
     {
         $this->checkValidator($validator);
 
