@@ -131,6 +131,21 @@ class ValidatorTest extends TestCase
         $validator = $this->makeValidator(['field1' => 'test']);
         $validator->int('field1');
         $this->assertSame(false, $validator->isValid());
+
+        // invalid
+        $validator = $this->makeValidator(['field1' => 2]);
+        $validator->int('field1', 3, 4);
+        $this->assertSame(false, $validator->isValid());
+
+        // invalid
+        $validator = $this->makeValidator(['field1' => 2]);
+        $validator->int('field1', 3);
+        $this->assertSame(false, $validator->isValid());
+
+        // invalid
+        $validator = $this->makeValidator(['field1' => 5]);
+        $validator->int('field1', 1, 4);
+        $this->assertSame(false, $validator->isValid());
     }
 
     public function testIpValidator()
