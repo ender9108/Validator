@@ -9,7 +9,7 @@ class DatetimeValidator implements ValidatorInterface
     /**
      * @var string
      */
-    private $error;
+    private $error = '';
 
     /**
      * @var mixed

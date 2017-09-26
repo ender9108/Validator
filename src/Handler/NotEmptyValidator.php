@@ -9,7 +9,7 @@ class NotEmptyValidator implements ValidatorInterface
     /**
      * @var string
      */
-    private $error;
+    private $error = '';
 
     /**
      * @var mixed

@@ -70,6 +70,24 @@ class ValidatorTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $validator->setCustomValidator('Tests\\EnderLab\\ValidValidator', 'test');
     }
+
+    public function testValidatorValid()
+    {
+        $validator = $this->makeValidator(['field1' => 'slug-slug']);
+        $validator->slug('field1');
+        $this->assertSame(true, $validator->isValid());
+    }
+
+    public function testValidatorInvalid()
+    {
+        $validator = $this->makeValidator([
+            'field1' => 'slug-slug',
+            'field2' => 'test.com'
+        ]);
+        $validator->slug('field1');
+        $validator->email('field2');
+        $this->assertSame(false, $validator->isValid());
+    }
 }
 
 class InvalidValidator
