@@ -143,8 +143,8 @@ class ValidatorTest extends TestCase
         $this->assertSame(false, $validator->isValid());
 
         // invalid
-        $validator = $this->makeValidator(['field1' => 5]);
-        $validator->int('field1', 1, 4);
+        $validator = $this->makeValidator(['field1' => 10]);
+        $validator->int('field1', null, 4);
         $this->assertSame(false, $validator->isValid());
     }
 

@@ -58,7 +58,7 @@ class IntValidator implements ValidatorInterface
     public function __construct(
         string $fieldName,
         $value,
-        ?int $min = 0,
+        ?int $min = null,
         ?int $max = null,
         ?array $customTemplate = null
     ) {
