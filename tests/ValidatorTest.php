@@ -207,7 +207,7 @@ class ValidatorTest extends TestCase
         // invalid
         $validator = $this->makeValidator(['field1' => '']);
         $validator->notEmpty('field1');
-        $this->assertSame(true, $validator->isValid());
+        $this->assertSame(false, $validator->isValid());
     }
 
     /*public function testUrlValidator()
