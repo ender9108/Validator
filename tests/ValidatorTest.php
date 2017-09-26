@@ -131,6 +131,11 @@ class ValidatorTest extends TestCase
         $validator = $this->makeValidator(['field1' => 'test']);
         $validator->int('field1');
         $this->assertSame(false, $validator->isValid());
+
+        // invalid
+        $validator = $this->makeValidator(['field1' => 5]);
+        $validator->int('field1', 8, 10);
+        $this->assertSame(false, $validator->isValid());
     }
 
     /*public function testIpValidator()
@@ -153,6 +158,21 @@ class ValidatorTest extends TestCase
         // invalid
         $validator = $this->makeValidator(['field1' => 'hello']);
         $validator->length('field1', 10);
+        $this->assertSame(false, $validator->isValid());
+
+        // invalid
+        $validator = $this->makeValidator(['field1' => 'hello']);
+        $validator->length('field1', null, 2);
+        $this->assertSame(false, $validator->isValid());
+
+        // invalid
+        $validator = $this->makeValidator(['field1' => 'hello']);
+        $validator->length('field1', 8, 10);
+        $this->assertSame(false, $validator->isValid());
+
+        // invalid
+        $validator = $this->makeValidator(['field1' => 'h']);
+        $validator->length('field1', 2);
         $this->assertSame(false, $validator->isValid());
     }
 
