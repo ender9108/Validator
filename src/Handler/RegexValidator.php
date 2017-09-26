@@ -9,6 +9,16 @@ class RegexValidator implements ValidatorInterface
     /**
      * @var string
      */
+    private $template = 'Value ":value" is not valid';
+
+    /**
+     * @var array
+     */
+    private $templateVar = [];
+
+    /**
+     * @var string
+     */
     private $error = '';
 
     /**
@@ -38,6 +48,11 @@ class RegexValidator implements ValidatorInterface
         $this->value = $value;
         $this->fieldName = $fieldName;
         $this->regex = $regex;
+        $this->templateVar = [
+            ':value' => $value,
+            ':fieldname' => $fieldName,
+            ':regex' => $regex
+        ];
     }
 
     /**
@@ -64,5 +79,10 @@ class RegexValidator implements ValidatorInterface
 
     private function buildError(): void
     {
+        $this->error = str_replace(
+            $this->templateVar,
+            [$this->value, $this->fieldName, $this->regex],
+            $this->template
+        );
     }
 }
