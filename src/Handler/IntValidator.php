@@ -54,13 +54,19 @@ class IntValidator implements ValidatorInterface
     {
         $options = [];
 
+        if (null !== $this->min || null !== $this->max) {
+            $options['options'] = [];
+        }
+
         if (null !== $this->min) {
-            $options['min_range'] = $this->min;
+            $options['options']['min_range'] = $this->min;
         }
 
         if (null !== $this->max) {
-            $options['max_range'] = $this->max;
+            $options['options']['max_range'] = $this->max;
         }
+
+        var_dump($options);
 
         if (false === filter_var($this->value, FILTER_VALIDATE_INT, $options)) {
             $this->buildError();
