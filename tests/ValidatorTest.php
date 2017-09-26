@@ -260,6 +260,19 @@ class ValidatorTest extends TestCase
         $validator->url('field1');
         $this->assertSame(false, $validator->isValid());
     }
+
+    public function testRegexValidator()
+    {
+        // valid
+        $validator = $this->makeValidator(['field1' => 'test-test']);
+        $validator->regex('field1', '/^[a-z0-9]+(-[a-z0-9]+)*$/');
+        $this->assertSame(true, $validator->isValid());
+
+        // invalid
+        $validator = $this->makeValidator(['field1' => 'test_test']);
+        $validator->regex('field1', '/^[a-z0-9]+(-[a-z0-9]+)*$/');
+        $this->assertSame(false, $validator->isValid());
+    }
 }
 
 class InvalidValidator

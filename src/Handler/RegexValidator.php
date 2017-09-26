@@ -45,8 +45,9 @@ class RegexValidator implements ValidatorInterface
      */
     public function isValid(): bool
     {
-        if (false === preg_match($this->regex, $this->value)) {
+        if (!preg_match($this->regex, $this->value)) {
             $this->buildError();
+
             return false;
         }
 
