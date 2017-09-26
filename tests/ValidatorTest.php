@@ -46,13 +46,13 @@ class ValidatorTest extends TestCase
     {
         $validator = $this->makeValidator();
         $this->expectException(\InvalidArgumentException::class);
-        $validator->setCustomValidator('Tests\\EnderLab\\InvalidValidator', 'field1');
+        $validator->addCustomValidator('Tests\\EnderLab\\InvalidValidator', 'field1');
     }
 
     public function testAddCustomValidValidator()
     {
         $validator = $this->makeValidator();
-        $validator->setCustomValidator('Tests\\EnderLab\\ValidValidator', 'field1');
+        $validator->addCustomValidator('Tests\\EnderLab\\ValidValidator', 'field1');
         $this->assertSame(1, $validator->count());
     }
 
@@ -60,7 +60,7 @@ class ValidatorTest extends TestCase
     {
         $validator = $this->makeValidator();
         $customValidator = new ValidValidator('field1', 'hello');
-        $validator->setCustomValidator($customValidator);
+        $validator->addCustomValidator($customValidator);
         $this->assertSame(1, $validator->count());
     }
 
@@ -68,7 +68,7 @@ class ValidatorTest extends TestCase
     {
         $validator = $this->makeValidator();
         $this->expectException(\InvalidArgumentException::class);
-        $validator->setCustomValidator('Tests\\EnderLab\\ValidValidator', 'test');
+        $validator->addCustomValidator('Tests\\EnderLab\\ValidValidator', 'test');
     }
 
     public function testValidatorValid()

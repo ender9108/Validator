@@ -64,3 +64,78 @@ $validator->url(string formFieldName [, int flags = null]);
 ```
 
 ## Add custom validator
+```php
+<?php
+use EnderLab\ValidatorInterface;
+
+class MyCustomValidator implements ValidatorInterface
+{
+    /**
+     * @var string
+     */
+    private $error = '';
+
+    /**
+     * @var mixed
+     */
+    private $value;
+
+    /**
+     * @var string
+     */
+    private $fieldName;
+
+    /**
+     * SlugValidator constructor.
+     *
+     * @param string   $fieldName
+     * @param mixed    $value
+     */
+    public function __construct(string $fieldName, $value)
+    {
+        $this->value = $value;
+        $this->fieldName = $fieldName;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isValid(): bool
+    {
+        if (!empty($this->value)) {
+            return true;
+        }
+
+        $this->error = 'Field empty !!!';
+        return true;
+    }
+
+    /**
+     * @return string
+     */
+    public function getError(): string
+    {
+        return $this->error;
+    }
+}
+
+$validator = new Validator([
+    'email' => 'myemail@host.com',
+    'slugProduct' => 'product-slug',
+    'productName' => 'Toolbox'
+]);
+
+/**
+ * $validator->addCustomValidator(
+ *     Classname or instance implement ValidatorInterface,
+ *     ...arguments
+ * );
+ */
+$validator->addCustomValidator('MyCustomValidator');
+
+if (true == $validator->isValid()) {
+    echo('Is valid !!!');
+} else {
+    print_r($validator->getErrors());
+}
+```

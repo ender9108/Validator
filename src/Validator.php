@@ -116,7 +116,7 @@ class Validator implements \Countable
      *
      * @return Validator
      */
-    public function setCustomValidator($validator, ...$arguments): self
+    public function addCustomValidator($validator, ...$arguments): self
     {
         if (is_object($validator) && $validator instanceof ValidValidator) {
             $this->validators[] = $validator;
