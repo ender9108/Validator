@@ -2,6 +2,8 @@
 
 namespace EnderLab;
 
+use Tests\EnderLab\ValidValidator;
+
 class Validator implements \Countable
 {
     /**
@@ -114,23 +116,23 @@ class Validator implements \Countable
      *
      * @return Validator
      */
-    public function setCustomValidator(string $validator, ...$arguments): self
+    public function setCustomValidator($validator, ...$arguments): self
     {
-        $this->checkValidator($validator);
+        if (is_object($validator) && $validator instanceof ValidValidator) {
+            $this->validators[] = $validator;
+        } else {
+            $this->checkValidator($validator);
 
-        $key = array_shift($arguments);
+            $key = array_shift($arguments);
 
-        if (false === $this->has($key)) {
-            throw new \InvalidArgumentException('The first parameter must be a field name');
-        }
+            if (false === $this->has($key)) {
+                throw new \InvalidArgumentException('The first parameter must be a field name');
+            }
 
-        array_unshift($arguments, $key, $this->getField($key));
+            array_unshift($arguments, $key, $this->getField($key));
 
-        if (is_string($validator)) {
             $reflection = new \ReflectionClass($validator);
             $this->validators[] = $reflection->newInstanceArgs($arguments);
-        } else {
-            $this->validators[] = $validator;
         }
 
         return $this;
@@ -145,15 +147,21 @@ class Validator implements \Countable
     }
 
     /**
-     * @param string $className
+     * @param ValidatorInterface|string $validator
+     *
+     * @return bool
      */
-    private function checkValidator(string $className): void
+    private function checkValidator($validator): bool
     {
-        if (!class_exists($className)) {
-            throw new \InvalidArgumentException('Class "' . $className . '" does not exists.');
+        if (is_object($validator) && $validator instanceof ValidValidator) {
+            return true;
         }
 
-        $reflection = new \ReflectionClass($className);
+        if (!class_exists($validator)) {
+            throw new \InvalidArgumentException('Class "' . $validator . '" does not exists.');
+        }
+
+        $reflection = new \ReflectionClass($validator);
 
         if (false === $reflection->implementsInterface('EnderLab\\ValidatorInterface')) {
             throw new \InvalidArgumentException(
@@ -162,5 +170,7 @@ class Validator implements \Countable
         }
 
         unset($reflection);
+
+        return true;
     }
 }

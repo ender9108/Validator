@@ -55,6 +55,21 @@ class ValidatorTest extends TestCase
         $validator->setCustomValidator('Tests\\EnderLab\\ValidValidator', 'field1');
         $this->assertSame(1, $validator->count());
     }
+
+    public function testAddCustomValidValidatorWithValidatorInstance()
+    {
+        $validator = $this->makeValidator();
+        $customValidator = new ValidValidator('field1', 'hello');
+        $validator->setCustomValidator($customValidator);
+        $this->assertSame(1, $validator->count());
+    }
+
+    public function testAddCustomValidValidatorWithFieldError()
+    {
+        $validator = $this->makeValidator();
+        $this->expectException(\InvalidArgumentException::class);
+        $validator->setCustomValidator('Tests\\EnderLab\\ValidValidator', 'test');
+    }
 }
 
 class InvalidValidator
