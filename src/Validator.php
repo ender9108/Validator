@@ -37,7 +37,7 @@ class Validator implements \Countable
      */
     public function __call(string $name, ?array $arguments = []): self
     {
-        $className = 'EnderLab\\' . ucfirst($name) . 'Validator';
+        $className = 'EnderLab\\Handler\\' . ucfirst($name) . 'Validator';
 
         $this->checkValidator($className);
 
@@ -85,11 +85,11 @@ class Validator implements \Countable
     /**
      * @param string $key
      *
-     * @return bool|mixed
+     * @return null|mixed
      */
     public function getField(string $key)
     {
-        return array_key_exists($key, $this->fields) ? $this->fields[$key] : false;
+        return array_key_exists($key, $this->fields) ? $this->fields[$key] : null;
     }
 
     /**
@@ -146,8 +146,9 @@ class Validator implements \Countable
 
     /**
      * @param string $className
+     * @return void
      */
-    private function checkValidator(string $className)
+    private function checkValidator(string $className): void
     {
         if (!class_exists($className)) {
             throw new \InvalidArgumentException('Class "' . $className . '" does not exists.');

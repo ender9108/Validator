@@ -1,4 +1,5 @@
 <?php
+
 namespace EnderLab\Handler;
 
 use EnderLab\ValidatorInterface;
@@ -29,7 +30,7 @@ class DatetimeValidator implements ValidatorInterface
      * SlugValidator constructor.
      *
      * @param string $fieldName
-     * @param mixed $value
+     * @param mixed  $value
      * @param string $format
      */
     public function __construct(string $fieldName, $value, string $format = 'Y-m-d H:i:s')
@@ -47,8 +48,9 @@ class DatetimeValidator implements ValidatorInterface
         $date = \DateTime::createFromFormat($this->format, $this->value);
         $errors = \DateTime::getLastErrors();
 
-        if ($errors['error_count'] > 0 || $errors['warning_count'] > 0 || $date === false) {
+        if ($errors['error_count'] > 0 || $errors['warning_count'] > 0 || false === $date) {
             $this->buildError();
+
             return false;
         }
 
@@ -63,11 +65,7 @@ class DatetimeValidator implements ValidatorInterface
         return $this->error;
     }
 
-    /**
-     * @return void
-     */
     private function buildError(): void
     {
-        //
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace EnderLab\Handler;
 
 use EnderLab\ValidatorInterface;
@@ -29,8 +30,8 @@ class IpValidator implements ValidatorInterface
      * SlugValidator constructor.
      *
      * @param string $fieldName
-     * @param mixed $value
-     * @param bool $isIpv6
+     * @param mixed  $value
+     * @param bool   $isIpv6
      */
     public function __construct(string $fieldName, $value, $isIpv6 = false)
     {
@@ -50,6 +51,7 @@ class IpValidator implements ValidatorInterface
             ($this->isIpv6 ? FILTER_FLAG_IPV6 : FILTER_FLAG_IPV4)
         )) {
             $this->buildError();
+
             return false;
         }
 
@@ -64,11 +66,7 @@ class IpValidator implements ValidatorInterface
         return $this->error;
     }
 
-    /**
-     * @return void
-     */
     private function buildError(): void
     {
-        //
     }
 }

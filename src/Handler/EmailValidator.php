@@ -1,4 +1,5 @@
 <?php
+
 namespace EnderLab\Handler;
 
 use EnderLab\ValidatorInterface;
@@ -24,7 +25,7 @@ class EmailValidator implements ValidatorInterface
      * SlugValidator constructor.
      *
      * @param string $fieldName
-     * @param mixed $value
+     * @param mixed  $value
      */
     public function __construct(string $fieldName, $value)
     {
@@ -39,6 +40,7 @@ class EmailValidator implements ValidatorInterface
     {
         if (false === filter_var($this->value, FILTER_VALIDATE_EMAIL)) {
             $this->buildError();
+
             return false;
         }
 
@@ -53,11 +55,7 @@ class EmailValidator implements ValidatorInterface
         return $this->error;
     }
 
-    /**
-     * @return void
-     */
     private function buildError(): void
     {
-        //
     }
 }

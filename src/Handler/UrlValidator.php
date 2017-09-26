@@ -1,4 +1,5 @@
 <?php
+
 namespace EnderLab\Handler;
 
 use EnderLab\ValidatorInterface;
@@ -27,8 +28,8 @@ class UrlValidator implements ValidatorInterface
     /**
      * SlugValidator constructor.
      *
-     * @param string $fieldName
-     * @param mixed $value
+     * @param string   $fieldName
+     * @param mixed    $value
      * @param int|null $flags
      */
     public function __construct(string $fieldName, $value, ?int $flags = null)
@@ -49,6 +50,7 @@ class UrlValidator implements ValidatorInterface
             (null === $this->flags ? [] : ['flags' => $this->flags])
         )) {
             $this->buildError();
+
             return false;
         }
 
@@ -63,11 +65,7 @@ class UrlValidator implements ValidatorInterface
         return $this->error;
     }
 
-    /**
-     * @return void
-     */
     private function buildError(): void
     {
-        //
     }
 }

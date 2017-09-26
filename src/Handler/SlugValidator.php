@@ -1,4 +1,5 @@
 <?php
+
 namespace EnderLab\Handler;
 
 use EnderLab\ValidatorInterface;
@@ -24,8 +25,8 @@ class SlugValidator implements ValidatorInterface
      * SlugValidator constructor.
      *
      * @param string $fieldName
-     * @param mixed $value
-      */
+     * @param mixed  $value
+     */
     public function __construct(string $fieldName, $value)
     {
         $this->value = $value;
@@ -41,6 +42,7 @@ class SlugValidator implements ValidatorInterface
 
         if (null !== $this->value && !preg_match($pattern, $this->value)) {
             $this->buildError();
+
             return false;
         }
 
@@ -55,11 +57,7 @@ class SlugValidator implements ValidatorInterface
         return $this->error;
     }
 
-    /**
-     * @return void
-     */
     private function buildError(): void
     {
-        //
     }
 }

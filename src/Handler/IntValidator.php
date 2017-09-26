@@ -1,4 +1,5 @@
 <?php
+
 namespace EnderLab\Handler;
 
 use EnderLab\ValidatorInterface;
@@ -33,8 +34,8 @@ class IntValidator implements ValidatorInterface
     /**
      * SlugValidator constructor.
      *
-     * @param string $fieldName
-     * @param mixed $value
+     * @param string   $fieldName
+     * @param mixed    $value
      * @param int|null $min
      * @param int|null $max
      */
@@ -63,6 +64,7 @@ class IntValidator implements ValidatorInterface
 
         if (false === filter_var($this->value, FILTER_VALIDATE_INT, $options)) {
             $this->buildError();
+
             return false;
         }
 
@@ -77,11 +79,7 @@ class IntValidator implements ValidatorInterface
         return $this->error;
     }
 
-    /**
-     * @return void
-     */
     private function buildError(): void
     {
-        //
     }
 }
