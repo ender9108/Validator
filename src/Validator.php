@@ -147,16 +147,12 @@ class Validator implements \Countable
     }
 
     /**
-     * @param ValidatorInterface|string $validator
+     * @param string $validator
      *
      * @return bool
      */
-    private function checkValidator($validator): bool
+    private function checkValidator(string $validator): bool
     {
-        if (is_object($validator) && $validator instanceof ValidValidator) {
-            return true;
-        }
-
         if (!class_exists($validator)) {
             throw new \InvalidArgumentException('Class "' . $validator . '" does not exists.');
         }
