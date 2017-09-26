@@ -30,8 +30,8 @@ class BooleanValidator implements ValidatorInterface
      * @var array
      */
     private $boolValue = [
-        'false', 'False', 'FALSE', 'no', 'No', 'n', 'N', '0', 'off', 'Off', 'OFF',
-        'true', 'True', 'TRUE', 'yes', 'Yes', 'y', 'Y', '1', 'on', 'On', 'ON'
+        false, 'false', 'False', 'FALSE', 'no', 'No', 'n', 'N', '0', 0, 'off', 'Off', 'OFF',
+        true, 'true', 'True', 'TRUE', 'yes', 'Yes', 'y', 'Y', '1', 1, 'on', 'On', 'ON'
     ];
 
     /**
@@ -54,6 +54,7 @@ class BooleanValidator implements ValidatorInterface
         if (in_array($this->value, $this->boolValue, true)) {
             return true;
         }
+
         $this->buildError();
 
         return false;
