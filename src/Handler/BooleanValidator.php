@@ -9,6 +9,16 @@ class BooleanValidator implements ValidatorInterface
     /**
      * @var string
      */
+    private $template = 'Value ":value" is not valid boolean';
+
+    /**
+     * @var array
+     */
+    private $templateVar = [];
+
+    /**
+     * @var string
+     */
     private $error = '';
 
     /**
@@ -44,6 +54,10 @@ class BooleanValidator implements ValidatorInterface
     {
         $this->value = $value;
         $this->fieldName = $fieldName;
+        $this->templateVar = [
+            ':value' => $value,
+            ':fieldname' => $fieldName
+        ];
     }
 
     /**
@@ -70,5 +84,10 @@ class BooleanValidator implements ValidatorInterface
 
     private function buildError(): void
     {
+        $this->error = str_replace(
+            $this->templateVar,
+            [$this->value, $this->fieldName],
+            $this->template
+        );
     }
 }

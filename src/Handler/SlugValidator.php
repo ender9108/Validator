@@ -9,6 +9,16 @@ class SlugValidator implements ValidatorInterface
     /**
      * @var string
      */
+    private $template = 'Slug ":value" is not valid';
+
+    /**
+     * @var array
+     */
+    private $templateVar = [];
+
+    /**
+     * @var string
+     */
     private $error = '';
 
     /**
@@ -31,6 +41,10 @@ class SlugValidator implements ValidatorInterface
     {
         $this->value = $value;
         $this->fieldName = $fieldName;
+        $this->templateVar = [
+            ':value' => $value,
+            ':fieldname' => $fieldName
+        ];
     }
 
     /**
@@ -59,5 +73,10 @@ class SlugValidator implements ValidatorInterface
 
     private function buildError(): void
     {
+        $this->error = str_replace(
+            $this->templateVar,
+            [$this->value, $this->fieldName],
+            $this->template
+        );
     }
 }

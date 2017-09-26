@@ -9,6 +9,16 @@ class IpValidator implements ValidatorInterface
     /**
      * @var string
      */
+    private $template = 'Ip ":value" is not valid';
+
+    /**
+     * @var array
+     */
+    private $templateVar = [];
+
+    /**
+     * @var string
+     */
     private $error = '';
 
     /**
@@ -38,6 +48,10 @@ class IpValidator implements ValidatorInterface
         $this->value = $value;
         $this->fieldName = $fieldName;
         $this->isIpv6 = $isIpv6;
+        $this->templateVar = [
+            ':value' => $value,
+            ':fieldname' => $fieldName
+        ];
     }
 
     /**
@@ -68,5 +82,10 @@ class IpValidator implements ValidatorInterface
 
     private function buildError(): void
     {
+        $this->error = str_replace(
+            $this->templateVar,
+            [$this->value, $this->fieldName],
+            $this->template
+        );
     }
 }

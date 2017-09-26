@@ -9,6 +9,16 @@ class UrlValidator implements ValidatorInterface
     /**
      * @var string
      */
+    private $template = 'Url ":value" is not valid';
+
+    /**
+     * @var array
+     */
+    private $templateVar = [];
+
+    /**
+     * @var string
+     */
     private $error = '';
 
     /**
@@ -37,6 +47,10 @@ class UrlValidator implements ValidatorInterface
         $this->value = $value;
         $this->fieldName = $fieldName;
         $this->flags = $flags;
+        $this->templateVar = [
+            ':value' => $value,
+            ':fieldname' => $fieldName
+        ];
     }
 
     /**
@@ -67,5 +81,10 @@ class UrlValidator implements ValidatorInterface
 
     private function buildError(): void
     {
+        $this->error = str_replace(
+            $this->templateVar,
+            [$this->value, $this->fieldName],
+            $this->template
+        );
     }
 }

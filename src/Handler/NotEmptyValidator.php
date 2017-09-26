@@ -9,6 +9,16 @@ class NotEmptyValidator implements ValidatorInterface
     /**
      * @var string
      */
+    private $template = 'Value is empty';
+
+    /**
+     * @var array
+     */
+    private $templateVar = [];
+
+    /**
+     * @var string
+     */
     private $error = '';
 
     /**
@@ -31,6 +41,10 @@ class NotEmptyValidator implements ValidatorInterface
     {
         $this->value = $value;
         $this->fieldName = $fieldName;
+        $this->templateVar = [
+            ':value' => $value,
+            ':fieldname' => $fieldName
+        ];
     }
 
     /**
@@ -57,5 +71,10 @@ class NotEmptyValidator implements ValidatorInterface
 
     private function buildError(): void
     {
+        $this->error = str_replace(
+            $this->templateVar,
+            [$this->value, $this->fieldName],
+            $this->template
+        );
     }
 }

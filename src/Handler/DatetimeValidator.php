@@ -9,6 +9,16 @@ class DatetimeValidator implements ValidatorInterface
     /**
      * @var string
      */
+    private $template = 'Datetime ":value" is not valid (format: :format)';
+
+    /**
+     * @var array
+     */
+    private $templateVar = [];
+
+    /**
+     * @var string
+     */
     private $error = '';
 
     /**
@@ -38,6 +48,11 @@ class DatetimeValidator implements ValidatorInterface
         $this->value = $value;
         $this->fieldName = $fieldName;
         $this->format = $format;
+        $this->templateVar = [
+            ':value' => $value,
+            ':fieldname' => $fieldName,
+            ':format' => $format
+        ];
     }
 
     /**
@@ -67,5 +82,10 @@ class DatetimeValidator implements ValidatorInterface
 
     private function buildError(): void
     {
+        $this->error = str_replace(
+            $this->templateVar,
+            [$this->value, $this->fieldName, $this->format],
+            $this->template
+        );
     }
 }
