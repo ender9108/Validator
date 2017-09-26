@@ -133,10 +133,28 @@ class ValidatorTest extends TestCase
         $this->assertSame(false, $validator->isValid());
     }
 
-    /*public function testIpValidator()
+    public function testIpValidator()
     {
-        $validator = $this->makeValidator(['field1' => '']);
-    }*/
+        // valid ipv4
+        $validator = $this->makeValidator(['field1' => '192.168.1.1']);
+        $validator->ip('field1');
+        $this->assertSame(true, $validator->isValid());
+
+        // invalid ipv4
+        $validator = $this->makeValidator(['field1' => '192.168']);
+        $validator->ip('field1');
+        $this->assertSame(false, $validator->isValid());
+
+        // valid ipv6
+        $validator = $this->makeValidator(['field1' => '2001:0db8:0000:85a3:0000:0000:ac1f:8001']);
+        $validator->ip('field1', true);
+        $this->assertSame(true, $validator->isValid());
+
+        // invalid ipv6
+        $validator = $this->makeValidator(['field1' => '2001:0db8']);
+        $validator->ip('field1', true);
+        $this->assertSame(false, $validator->isValid());
+    }
 
     public function testLengthValidator()
     {
