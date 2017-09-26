@@ -147,7 +147,7 @@ class ValidatorTest extends TestCase
 
         // valid
         $validator = $this->makeValidator(['field1' => 'hello']);
-        $validator->length('field1', 1, 6);
+        $validator->length('field1', 1, 5);
         $this->assertSame(true, $validator->isValid());
 
         // invalid
@@ -158,6 +158,11 @@ class ValidatorTest extends TestCase
         // invalid
         $validator = $this->makeValidator(['field1' => 'hello']);
         $validator->length('field1', null, 2);
+        $this->assertSame(false, $validator->isValid());
+
+        // invalid
+        $validator = $this->makeValidator(['field1' => 'h']);
+        $validator->length('field1', 2, 4);
         $this->assertSame(false, $validator->isValid());
     }
 
