@@ -39,15 +39,17 @@ class IpValidator implements ValidatorInterface
     /**
      * SlugValidator constructor.
      *
-     * @param string $fieldName
-     * @param mixed  $value
-     * @param bool   $isIpv6
+     * @param string      $fieldName
+     * @param mixed       $value
+     * @param bool        $isIpv6
+     * @param null|string $customTemplate
      */
-    public function __construct(string $fieldName, $value, $isIpv6 = false)
+    public function __construct(string $fieldName, $value, $isIpv6 = false, ?string $customTemplate = null)
     {
         $this->value = $value;
         $this->fieldName = $fieldName;
         $this->isIpv6 = $isIpv6;
+        $this->template = null === $customTemplate ? $this->template : $customTemplate;
         $this->templateVar = [
             ':value'     => $value,
             ':fieldname' => $fieldName

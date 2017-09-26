@@ -39,15 +39,17 @@ class RegexValidator implements ValidatorInterface
     /**
      * SlugValidator constructor.
      *
-     * @param string $fieldName
-     * @param mixed  $value
-     * @param string $regex
+     * @param string      $fieldName
+     * @param mixed       $value
+     * @param string      $regex
+     * @param null|string $customTemplate
      */
-    public function __construct(string $fieldName, $value, string $regex)
+    public function __construct(string $fieldName, $value, string $regex, ?string $customTemplate = null)
     {
         $this->value = $value;
         $this->fieldName = $fieldName;
         $this->regex = $regex;
+        $this->template = null === $customTemplate ? $this->template : $customTemplate;
         $this->templateVar = [
             ':value'     => $value,
             ':fieldname' => $fieldName,

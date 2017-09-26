@@ -39,15 +39,17 @@ class DatetimeValidator implements ValidatorInterface
     /**
      * SlugValidator constructor.
      *
-     * @param string $fieldName
-     * @param mixed  $value
-     * @param string $format
+     * @param string      $fieldName
+     * @param mixed       $value
+     * @param string      $format
+     * @param null|string $customTemplate
      */
-    public function __construct(string $fieldName, $value, string $format = 'Y-m-d H:i:s')
+    public function __construct(string $fieldName, $value, string $format = 'Y-m-d H:i:s', ?string $customTemplate = null)
     {
         $this->value = $value;
         $this->fieldName = $fieldName;
         $this->format = $format;
+        $this->template = null === $customTemplate ? $this->template : $customTemplate;
         $this->templateVar = [
             ':value'     => $value,
             ':fieldname' => $fieldName,

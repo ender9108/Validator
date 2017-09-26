@@ -34,13 +34,15 @@ class EmailValidator implements ValidatorInterface
     /**
      * SlugValidator constructor.
      *
-     * @param string $fieldName
-     * @param mixed  $value
+     * @param string      $fieldName
+     * @param mixed       $value
+     * @param null|string $customTemplate
      */
-    public function __construct(string $fieldName, $value)
+    public function __construct(string $fieldName, $value, ?string $customTemplate = null)
     {
         $this->value = $value;
         $this->fieldName = $fieldName;
+        $this->template = null === $customTemplate ? $this->template : $customTemplate;
         $this->templateVar = [
             ':value'     => $value,
             ':fieldname' => $fieldName

@@ -7,6 +7,20 @@ use EnderLab\ValidatorInterface;
 class LengthValidator implements ValidatorInterface
 {
     /**
+     * @var array
+     */
+    private $template = [
+        'min'       => 'Field ":fieldname" must contain more than :min characters',
+        'max'       => 'Field ":fieldname" must contain less than :max characters',
+        'between'   => 'Field ":fieldname" must contain between :min and :max characters'
+    ];
+
+    /**
+     * @var array
+     */
+    private $templateVar = [];
+
+    /**
      * @var string
      */
     private $error = '';
@@ -34,17 +48,30 @@ class LengthValidator implements ValidatorInterface
     /**
      * SlugValidator constructor.
      *
-     * @param string   $fieldName
-     * @param mixed    $value
-     * @param int|null $min
-     * @param int|null $max
+     * @param string     $fieldName
+     * @param mixed      $value
+     * @param int|null   $min
+     * @param int|null   $max
+     * @param array|null $customTemplate
      */
-    public function __construct(string $fieldName, $value, ?int $min = null, ?int $max = null)
-    {
+    public function __construct(
+        string $fieldName,
+        $value,
+        ?int $min = null,
+        ?int $max = null,
+        ?array $customTemplate = null
+    ) {
         $this->value = $value;
         $this->fieldName = $fieldName;
         $this->min = $min;
         $this->max = $max;
+        $this->template = null === $customTemplate ? $this->template : $customTemplate;
+        $this->templateVar = [
+            ':value'     => $value,
+            ':fieldname' => $fieldName,
+            ':min'       => $min,
+            ':max'       => $max
+        ];
     }
 
     /**
@@ -58,19 +85,21 @@ class LengthValidator implements ValidatorInterface
             null !== $this->max &&
             ($length < $this->min || $length > $this->max)
         ) {
-            $this->buildError();
+            $this->buildError('between');
 
             return false;
         }
-
-        if (null !== $this->min && $length < $this->min) {
-            $this->buildError();
+        if (null !== $this->min &&
+            $length < $this->min
+        ) {
+            $this->buildError('min');
 
             return false;
         }
-
-        if (null !== $this->max && $length > $this->max) {
-            $this->buildError();
+        if (null !== $this->max &&
+            $length > $this->max
+        ) {
+            $this->buildError('max');
 
             return false;
         }
@@ -86,7 +115,17 @@ class LengthValidator implements ValidatorInterface
         return $this->error;
     }
 
-    private function buildError(): void
+    /**
+     * @param string $templateName
+     */
+    private function buildError(string $templateName): void
     {
+        if (isset($this->template[$templateName])) {
+            $this->error = str_replace(
+                $this->templateVar,
+                [$this->value, $this->fieldName, $this->min, $this->max],
+                $this->template[$templateName]
+            );
+        }
     }
 }

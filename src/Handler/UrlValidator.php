@@ -38,15 +38,17 @@ class UrlValidator implements ValidatorInterface
     /**
      * SlugValidator constructor.
      *
-     * @param string   $fieldName
-     * @param mixed    $value
-     * @param int|null $flags
+     * @param string      $fieldName
+     * @param mixed       $value
+     * @param int|null    $flags
+     * @param null|string $customTemplate
      */
-    public function __construct(string $fieldName, $value, ?int $flags = null)
+    public function __construct(string $fieldName, $value, ?int $flags = null, ?string $customTemplate = null)
     {
         $this->value = $value;
         $this->fieldName = $fieldName;
         $this->flags = $flags;
+        $this->template = null === $customTemplate ? $this->template : $customTemplate;
         $this->templateVar = [
             ':value'     => $value,
             ':fieldname' => $fieldName

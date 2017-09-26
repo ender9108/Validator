@@ -67,7 +67,7 @@ class Validator implements \Countable
         foreach ($this->validators as $validator) {
             if (false === $validator->isValid()) {
                 $result = false;
-                $this->errors[] = $validator->getError();
+                $this->setError($validator->getError());
             }
         }
 
@@ -144,6 +144,20 @@ class Validator implements \Countable
     public function count(): int
     {
         return count($this->validators);
+    }
+
+    /**
+     * @param string|array $errors
+     */
+    private function setError($errors): void
+    {
+        if (is_array($errors)) {
+            foreach ($errors as $error) {
+                $this->errors[] = $error;
+            }
+        } else {
+            $this->errors[] = $errors;
+        }
     }
 
     /**
