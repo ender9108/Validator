@@ -36,10 +36,10 @@ class LengthValidator implements ValidatorInterface
      *
      * @param string   $fieldName
      * @param mixed    $value
-     * @param int      $min
+     * @param int|null $min
      * @param int|null $max
      */
-    public function __construct(string $fieldName, $value, int $min, ?int $max = null)
+    public function __construct(string $fieldName, $value, ?int $min = null, ?int $max = null)
     {
         $this->value = $value;
         $this->fieldName = $fieldName;
