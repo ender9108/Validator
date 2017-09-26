@@ -88,6 +88,75 @@ class ValidatorTest extends TestCase
         $validator->email('field2');
         $this->assertSame(false, $validator->isValid());
     }
+
+    public function testDatetimeValidator()
+    {
+        // valid
+        $validator = $this->makeValidator(['field1' => '2017-09-26']);
+        $validator->datetime('field1', 'Y-m-d');
+        $this->assertSame(true, $validator->isValid());
+
+        // invalid
+        $validator = $this->makeValidator(['field1' => 'pouette']);
+        $validator->datetime('field1', 'Y-m-d');
+        $this->assertSame(false, $validator->isValid());
+    }
+
+    public function testEmailValidator()
+    {
+        // valid
+        $validator = $this->makeValidator(['field1' => 'alexandreberthelot9108@gmail.com']);
+        $validator->email('field1');
+        $this->assertSame(true, $validator->isValid());
+
+        // invalid
+        $validator = $this->makeValidator(['field1' => 'alexandreberthelot9108@gmail']);
+        $validator->email('field1');
+        $this->assertSame(false, $validator->isValid());
+    }
+
+    public function testIntValidator()
+    {
+        // valid
+        $validator = $this->makeValidator(['field1' => 1]);
+        $validator->int('field1');
+        $this->assertSame(true, $validator->isValid());
+
+        // valid
+        $validator = $this->makeValidator(['field1' => 5]);
+        $validator->int('field1', 1, 10);
+        $this->assertSame(true, $validator->isValid());
+
+        // invalid
+        $validator = $this->makeValidator(['field1' => 'test']);
+        $validator->int('field1');
+        $this->assertSame(false, $validator->isValid());
+    }
+
+    /*public function testIpValidator()
+    {
+        $validator = $this->makeValidator(['field1' => '']);
+    }
+
+    public function testLengthValidator()
+    {
+        $validator = $this->makeValidator(['field1' => '']);
+    }
+
+    public function testNotEmptyValidator()
+    {
+        $validator = $this->makeValidator(['field1' => '']);
+    }
+
+    public function testSlugValidator()
+    {
+        $validator = $this->makeValidator(['field1' => '']);
+    }
+
+    public function testUrlValidator()
+    {
+        $validator = $this->makeValidator(['field1' => '']);
+    }*/
 }
 
 class InvalidValidator
