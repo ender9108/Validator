@@ -146,7 +146,6 @@ class Validator implements \Countable
 
     /**
      * @param string $className
-     * @return void
      */
     private function checkValidator(string $className): void
     {
