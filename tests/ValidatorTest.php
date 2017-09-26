@@ -210,6 +210,44 @@ class ValidatorTest extends TestCase
         $this->assertSame(false, $validator->isValid());
     }
 
+    public function testBooleanValidator()
+    {
+        // valid
+        $validator = $this->makeValidator(['field1' => true]);
+        $validator->boolean('field1');
+        $this->assertSame(true, $validator->isValid());
+
+        // valid
+        $validator = $this->makeValidator(['field1' => 'on']);
+        $validator->boolean('field1');
+        $this->assertSame(true, $validator->isValid());
+
+        // valid
+        $validator = $this->makeValidator(['field1' => false]);
+        $validator->boolean('field1');
+        $this->assertSame(true, $validator->isValid());
+
+        // valid
+        $validator = $this->makeValidator(['field1' => 'yes']);
+        $validator->boolean('field1');
+        $this->assertSame(true, $validator->isValid());
+
+        // valid
+        $validator = $this->makeValidator(['field1' => 0]);
+        $validator->boolean('field1');
+        $this->assertSame(true, $validator->isValid());
+
+        // valid
+        $validator = $this->makeValidator(['field1' => 1]);
+        $validator->boolean('field1');
+        $this->assertSame(true, $validator->isValid());
+
+        // invalid
+        $validator = $this->makeValidator(['field1' => 'test']);
+        $validator->boolean('field1');
+        $this->assertSame(false, $validator->isValid());
+    }
+
     /*public function testUrlValidator()
     {
         // valid
