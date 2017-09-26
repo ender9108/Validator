@@ -4,7 +4,7 @@ namespace EnderLab\Handler;
 
 use EnderLab\ValidatorInterface;
 
-class DatetimeValidator implements ValidatorInterface
+class RegexValidator implements ValidatorInterface
 {
     /**
      * @var string
@@ -24,20 +24,20 @@ class DatetimeValidator implements ValidatorInterface
     /**
      * @var string
      */
-    private $format;
+    private $regex;
 
     /**
      * SlugValidator constructor.
      *
      * @param string $fieldName
      * @param mixed  $value
-     * @param string $format
+     * @param string $regex
      */
-    public function __construct(string $fieldName, $value, string $format = 'Y-m-d H:i:s')
+    public function __construct(string $fieldName, $value, string $regex)
     {
         $this->value = $value;
         $this->fieldName = $fieldName;
-        $this->format = $format;
+        $this->regex = $regex;
     }
 
     /**
@@ -45,12 +45,8 @@ class DatetimeValidator implements ValidatorInterface
      */
     public function isValid(): bool
     {
-        $date = \DateTime::createFromFormat($this->format, $this->value);
-        $errors = \DateTime::getLastErrors();
-
-        if ($errors['error_count'] > 0 || $errors['warning_count'] > 0 || false === $date) {
+        if (false === preg_match($this->regex, $this->value)) {
             $this->buildError();
-
             return false;
         }
 
