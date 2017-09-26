@@ -159,14 +159,22 @@ class ValidatorTest extends TestCase
     /*public function testNotEmptyValidator()
     {
         $validator = $this->makeValidator(['field1' => '']);
-    }
+    }*/
 
     public function testSlugValidator()
     {
-        $validator = $this->makeValidator(['field1' => '']);
+        // valid
+        $validator = $this->makeValidator(['field1' => 'slug-slug']);
+        $validator->slug('field1');
+        $this->assertSame(true, $validator->isValid());
+
+        // invalid
+        $validator = $this->makeValidator(['field1' => 'slug-slug_Slug']);
+        $validator->slug('field1');
+        $this->assertSame(false, $validator->isValid());
     }
 
-    public function testUrlValidator()
+    /*public function testUrlValidator()
     {
         $validator = $this->makeValidator(['field1' => '']);
     }*/
