@@ -49,9 +49,9 @@ class RegexValidator implements ValidatorInterface
         $this->fieldName = $fieldName;
         $this->regex = $regex;
         $this->templateVar = [
-            ':value' => $value,
+            ':value'     => $value,
             ':fieldname' => $fieldName,
-            ':regex' => $regex
+            ':regex'     => $regex
         ];
     }
 

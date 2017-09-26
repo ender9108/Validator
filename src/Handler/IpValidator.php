@@ -49,7 +49,7 @@ class IpValidator implements ValidatorInterface
         $this->fieldName = $fieldName;
         $this->isIpv6 = $isIpv6;
         $this->templateVar = [
-            ':value' => $value,
+            ':value'     => $value,
             ':fieldname' => $fieldName
         ];
     }

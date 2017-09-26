@@ -48,7 +48,7 @@ class UrlValidator implements ValidatorInterface
         $this->fieldName = $fieldName;
         $this->flags = $flags;
         $this->templateVar = [
-            ':value' => $value,
+            ':value'     => $value,
             ':fieldname' => $fieldName
         ];
     }

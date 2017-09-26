@@ -49,9 +49,9 @@ class DatetimeValidator implements ValidatorInterface
         $this->fieldName = $fieldName;
         $this->format = $format;
         $this->templateVar = [
-            ':value' => $value,
+            ':value'     => $value,
             ':fieldname' => $fieldName,
-            ':format' => $format
+            ':format'    => $format
         ];
     }
 

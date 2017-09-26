@@ -55,7 +55,7 @@ class BooleanValidator implements ValidatorInterface
         $this->value = $value;
         $this->fieldName = $fieldName;
         $this->templateVar = [
-            ':value' => $value,
+            ':value'     => $value,
             ':fieldname' => $fieldName
         ];
     }
