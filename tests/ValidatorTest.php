@@ -71,6 +71,14 @@ class ValidatorTest extends TestCase
         $validator->addCustomValidator('Tests\\EnderLab\\ValidValidator', 'test');
     }
 
+    public function testAddCustomValidValidatorWithEmptyError()
+    {
+        $validator = $this->makeValidator();
+        $validator->addCustomValidator('Tests\\EnderLab\\ValidValidator', 'field1');
+        $validator->isValid();
+        $this->assertSame('Tests\\EnderLab\\ValidValidator - Unknown error', $validator->getErrors()[0]);
+    }
+
     public function testValidatorValid()
     {
         $validator = $this->makeValidator(['field1' => 'slug-slug']);
@@ -405,7 +413,7 @@ class ValidValidator implements ValidatorInterface
      */
     public function isValid(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -413,6 +421,6 @@ class ValidValidator implements ValidatorInterface
      */
     public function getError(): string
     {
-        return 'error message';
+        return '';
     }
 }
