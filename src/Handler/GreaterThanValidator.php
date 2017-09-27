@@ -1,4 +1,5 @@
 <?php
+
 namespace EnderLab\Handler;
 
 use EnderLab\ValidatorInterface;
@@ -37,7 +38,7 @@ class GreaterThanValidator implements ValidatorInterface
 
     /**
      * @param string $fieldName
-     * @param mixed $value
+     * @param mixed  $value
      * @param $compareValue
      * @param null|string $customTemplate
      */
@@ -64,6 +65,7 @@ class GreaterThanValidator implements ValidatorInterface
         }
 
         $this->buildError();
+
         return false;
     }
 

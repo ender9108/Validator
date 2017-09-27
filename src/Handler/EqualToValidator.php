@@ -1,4 +1,5 @@
 <?php
+
 namespace EnderLab\Handler;
 
 use EnderLab\ValidatorInterface;
@@ -37,7 +38,7 @@ class EqualToValidator implements ValidatorInterface
 
     /**
      * @param string $fieldName
-     * @param mixed $value
+     * @param mixed  $value
      * @param $compareValue
      * @param null|string $customTemplate
      */
@@ -59,11 +60,12 @@ class EqualToValidator implements ValidatorInterface
      */
     public function isValid(): bool
     {
-        if ($this->value == $this->compareValue) {
+        if ($this->value === $this->compareValue) {
             return true;
         }
 
         $this->buildError();
+
         return false;
     }
 
