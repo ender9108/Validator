@@ -67,7 +67,13 @@ class Validator implements \Countable
         foreach ($this->validators as $validator) {
             if (false === $validator->isValid()) {
                 $result = false;
-                $this->errors[] = $validator->getError();
+                $error = $validator->getError();
+
+                if (null === $error || '' === trim($error)) {
+                    $error = get_class($validator) . ' - Unknown error';
+                }
+
+                $this->errors[] = $error;
             }
         }
 
