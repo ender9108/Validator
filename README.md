@@ -38,6 +38,18 @@ $validator->datetime(string formFieldName [, string dateFormat = Y-m-d H:i:s]);
 ```php
 $validator->email(string formFieldName);
 ```
+- EqualTo
+```php
+$validator->equalTo(string formFieldName, mixed compareValue);
+```
+- GreaterThanOrEqual
+```php
+$validator->greaterThanOrEqual(string formFieldName, mixed compareValue);
+```
+- GreaterThan
+```php
+$validator->greaterThan(string formFieldName, mixed compareValue);
+```
 - Int
 ```php
 $validator->int(string formFieldName [,int min = null, int max = null]);
@@ -50,9 +62,21 @@ $validator->ip(string formFieldName [, bool isIpv6 = false]);
 ```php
 $validator->length(string formFieldName [,int min = null, int max = null]);
 ```
+- LessThanOrEqual
+```php
+$validator->lessThanOrEqual(string formFieldName, mixed compareValue);
+```
+- LessThan
+```php
+$validator->lessThan(string formFieldName, mixed compareValue);
+```
 - NotEmpty
 ```php
 $validator->notEmpty(string formFieldName);
+```
+- regex
+```php
+$validator->regex(string formFieldName, string regex);
 ```
 - Slug
 ```php
@@ -62,6 +86,7 @@ $validator->slug(string formFieldName);
 ```php
 $validator->url(string formFieldName [, int flags = null]);
 ```
+
 
 ## Add custom validator
 ```php
