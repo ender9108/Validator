@@ -37,8 +37,6 @@ class DatetimeValidator implements ValidatorInterface
     private $format;
 
     /**
-     * SlugValidator constructor.
-     *
      * @param string      $fieldName
      * @param mixed       $value
      * @param string      $format

@@ -37,8 +37,6 @@ class IpValidator implements ValidatorInterface
     private $isIpv6;
 
     /**
-     * SlugValidator constructor.
-     *
      * @param string      $fieldName
      * @param mixed       $value
      * @param bool        $isIpv6

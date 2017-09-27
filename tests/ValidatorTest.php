@@ -288,6 +288,81 @@ class ValidatorTest extends TestCase
         $validator->regex('field1', '/^[a-z0-9]+(-[a-z0-9]+)*$/');
         $this->assertSame(false, $validator->isValid());
     }
+
+    public function testEqualToValidator()
+    {
+        // valid
+        $validator = $this->makeValidator(['field1' => 4]);
+        $validator->equalTo('field1', 4);
+        $this->assertSame(true, $validator->isValid());
+
+        // invalid
+        $validator = $this->makeValidator(['field1' => 4]);
+        $validator->equalTo('field1', 12);
+        $this->assertSame(false, $validator->isValid());
+    }
+
+    public function testGreaterThanOrEqualValidator()
+    {
+        // valid
+        $validator = $this->makeValidator(['field1' => 4]);
+        $validator->greaterThanOrEqual('field1', 4);
+        $this->assertSame(true, $validator->isValid());
+
+        // valid
+        $validator = $this->makeValidator(['field1' => 4]);
+        $validator->greaterThanOrEqual('field1', 3);
+        $this->assertSame(true, $validator->isValid());
+
+        // invalid
+        $validator = $this->makeValidator(['field1' => 4]);
+        $validator->greaterThanOrEqual('field1', 12);
+        $this->assertSame(false, $validator->isValid());
+    }
+
+    public function testGreaterThanValidator()
+    {
+        // valid
+        $validator = $this->makeValidator(['field1' => 4]);
+        $validator->greaterThan('field1', 3);
+        $this->assertSame(true, $validator->isValid());
+
+        // invalid
+        $validator = $this->makeValidator(['field1' => 4]);
+        $validator->greaterThan('field1', 5);
+        $this->assertSame(false, $validator->isValid());
+    }
+
+    public function testLessThanOrEqualValidator()
+    {
+        // valid
+        $validator = $this->makeValidator(['field1' => 4]);
+        $validator->lessThanOrEqual('field1', 4);
+        $this->assertSame(true, $validator->isValid());
+
+        // valid
+        $validator = $this->makeValidator(['field1' => 4]);
+        $validator->lessThanOrEqual('field1', 5);
+        $this->assertSame(true, $validator->isValid());
+
+        // invalid
+        $validator = $this->makeValidator(['field1' => 4]);
+        $validator->lessThanOrEqual('field1', 2);
+        $this->assertSame(false, $validator->isValid());
+    }
+
+    public function testLessThanValidator()
+    {
+        // valid
+        $validator = $this->makeValidator(['field1' => 1]);
+        $validator->lessThan('field1', 4);
+        $this->assertSame(true, $validator->isValid());
+
+        // invalid
+        $validator = $this->makeValidator(['field1' => 4]);
+        $validator->lessThan('field1', 4);
+        $this->assertSame(false, $validator->isValid());
+    }
 }
 
 class InvalidValidator

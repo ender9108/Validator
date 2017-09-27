@@ -45,8 +45,6 @@ class BooleanValidator implements ValidatorInterface
     ];
 
     /**
-     * SlugValidator constructor.
-     *
      * @param string      $fieldName
      * @param mixed       $value
      * @param null|string $customTemplate

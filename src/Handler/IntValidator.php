@@ -47,8 +47,6 @@ class IntValidator implements ValidatorInterface
     private $max;
 
     /**
-     * SlugValidator constructor.
-     *
      * @param string     $fieldName
      * @param mixed      $value
      * @param int|null   $min

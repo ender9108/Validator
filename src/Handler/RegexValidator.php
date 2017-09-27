@@ -37,8 +37,6 @@ class RegexValidator implements ValidatorInterface
     private $regex;
 
     /**
-     * SlugValidator constructor.
-     *
      * @param string      $fieldName
      * @param mixed       $value
      * @param string      $regex

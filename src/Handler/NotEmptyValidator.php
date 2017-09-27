@@ -32,8 +32,6 @@ class NotEmptyValidator implements ValidatorInterface
     private $fieldName;
 
     /**
-     * SlugValidator constructor.
-     *
      * @param string      $fieldName
      * @param mixed       $value
      * @param null|string $customTemplate

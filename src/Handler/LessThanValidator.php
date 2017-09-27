@@ -1,15 +1,14 @@
 <?php
-
 namespace EnderLab\Handler;
 
 use EnderLab\ValidatorInterface;
 
-class SlugValidator implements ValidatorInterface
+class LessThanValidator implements ValidatorInterface
 {
     /**
      * @var string
      */
-    private $template = 'Slug ":value" is not valid';
+    private $template = 'Value :value is not less than to :compareValue';
 
     /**
      * @var array
@@ -27,24 +26,32 @@ class SlugValidator implements ValidatorInterface
     private $value;
 
     /**
+     * @var mixed
+     */
+    private $compareValue;
+
+    /**
      * @var string
      */
     private $fieldName;
 
     /**
-     * @param string      $fieldName
-     * @param mixed       $value
+     * @param string $fieldName
+     * @param mixed $value
+     * @param $compareValue
      * @param null|string $customTemplate
      */
-    public function __construct(string $fieldName, $value, ?string $customTemplate = null)
+    public function __construct(string $fieldName, $value, $compareValue, ?string $customTemplate = null)
     {
         $this->value = $value;
         $this->fieldName = $fieldName;
         $this->template = null === $customTemplate ? $this->template : $customTemplate;
         $this->templateVar = [
-            ':value'     => $value,
-            ':fieldname' => $fieldName
+            ':value'        => $value,
+            ':compareValue' => $compareValue,
+            ':fieldname'    => $fieldName
         ];
+        $this->compareValue = $compareValue;
     }
 
     /**
@@ -52,15 +59,12 @@ class SlugValidator implements ValidatorInterface
      */
     public function isValid(): bool
     {
-        $pattern = '/^[a-z0-9]+(-[a-z0-9]+)*$/';
-
-        if (null !== $this->value && !preg_match($pattern, $this->value)) {
-            $this->buildError();
-
-            return false;
+        if ($this->value < $this->compareValue) {
+            return true;
         }
 
-        return true;
+        $this->buildError();
+        return false;
     }
 
     /**
@@ -75,7 +79,7 @@ class SlugValidator implements ValidatorInterface
     {
         $this->error = str_replace(
             $this->templateVar,
-            [$this->value, $this->fieldName],
+            [$this->value, $this->fieldName, $this->compareValue],
             $this->template
         );
     }

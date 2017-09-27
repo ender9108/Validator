@@ -36,8 +36,6 @@ class UrlValidator implements ValidatorInterface
     private $flags;
 
     /**
-     * SlugValidator constructor.
-     *
      * @param string      $fieldName
      * @param mixed       $value
      * @param int|null    $flags
